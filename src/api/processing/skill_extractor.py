@@ -1,11 +1,20 @@
+import re
 from src.api.processing.skills_list import SKILLS
 
+
+SKILL_PATTERNS = [
+    (skill, re.compile(rf"(?<![a-z0-9]){re.escape(skill)}(?![a-z0-9])"))
+    for skill in SKILLS
+]
+
 def extract_skills(text: str):
-    text = text.lower()
-    found_skills = []
+    if not text:
+        return []
 
-    for skill in SKILLS:
-        if skill in text:
-            found_skills.append(skill)
+    normalized_text = re.sub(r"\s+", " ", text.lower())
 
-    return list(set(found_skills))
+    return [
+        skill
+        for skill, pattern in SKILL_PATTERNS
+        if pattern.search(normalized_text)
+    ]
