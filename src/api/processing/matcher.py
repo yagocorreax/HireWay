@@ -1,14 +1,14 @@
 def match_skills(resume_skills: list, job_skills: list):
     resume_set = set(resume_skills)
-    job_set = set(job_skills)
+    ordered_job_skills = list(dict.fromkeys(job_skills))
 
-    matched = list(resume_set.intersection(job_set))
-    missing = list(job_set.difference(resume_set))
+    matched = [skill for skill in ordered_job_skills if skill in resume_set]
+    missing = [skill for skill in ordered_job_skills if skill not in resume_set]
 
-    if len(job_set) == 0:
+    if len(ordered_job_skills) == 0:
         score = 0
     else:
-        score = len(matched) / len(job_set)
+        score = len(matched) / len(ordered_job_skills)
     
     return {
         "match_score": round(score, 2),
