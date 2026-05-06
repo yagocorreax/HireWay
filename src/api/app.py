@@ -7,6 +7,7 @@ from starlette.concurrency import run_in_threadpool
 from src.api.processing.skill_extractor import extract_skills
 from src.api.ingestion.resume_parser import extract_text_from_pdf
 from src.api.processing.matcher import match_skills
+from src.api.services.recommendation_service import recommend_learning_paths_for_gaps
 
 app = FastAPI(title="HireWay API")
 
@@ -102,9 +103,16 @@ async def analyze_resume(
 
     match_result = match_skills(resume_skills, job_skills)
 
+    missing_skills = match_result["missing_skills"]
+
+    recommendations = recommend_learning_paths_for_gaps(
+        missing_skills
+    )
+
     return {
         "resume_skills": resume_skills,
         "job_skills": job_skills,
-        "match": match_result
+        "match": match_result,
+        "learning_recommendations": recommendations
     }
 
