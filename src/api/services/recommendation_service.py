@@ -1,6 +1,5 @@
 from src.api.ingestion.material_loader import load_materials
 
-
 LEVEL_ORDER = {
     "beginner": 1,
     "intermediate": 2,
