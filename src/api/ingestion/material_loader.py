@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 
-MATERIALS_PATH = Path("data/knowledge_base/Material.json")
+MATERIALS_PATH = Path("data/raw/resumes/embedding_base/Material.json")
 
 
 def load_materials() -> list[dict]:
