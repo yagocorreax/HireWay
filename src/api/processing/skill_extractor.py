@@ -17,4 +17,4 @@ def extract_skills(text: str):
         skill
         for skill, pattern in SKILL_PATTERNS
         if pattern.search(normalized_text)
-    ]
+]
